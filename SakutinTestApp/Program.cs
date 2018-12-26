@@ -78,7 +78,7 @@ namespace Delegates
             
             Console.ForegroundColor = oldColor;
 
-            Health = Health - (100 - Armor);
+            Health = Health - (BossAttack.damage - Armor);
         }
 
         private static void InformPlayer(string info, ConsoleColor infoColor)
