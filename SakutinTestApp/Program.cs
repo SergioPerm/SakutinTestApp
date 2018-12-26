@@ -80,39 +80,35 @@ namespace Delegates
 
             Health = Health - (100 - Armor);
         }
+
+        private static void InformPlayer(string info, ConsoleColor infoColor)
+        {
+            ConsoleColor oldColor = Console.ForegroundColor;
+            Console.ForegroundColor = infoColor;
+            Console.WriteLine(info);
+            Console.ForegroundColor = oldColor;
+        }
         
         public static void Main(string[] args)
         {
+           
+            InformPlayer("Босс может атаковать в двух режимах: все атаки по очереди и случайной атакой", ConsoleColor.Yellow);
             
-            ConsoleColor oldColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Босс может атаковать в двух режимах: все атаки по очереди и случайной атакой");
-            Console.ForegroundColor = oldColor;
-
             int Health = 1000;
             int Armor = 20;
 
             bool isRandomAttack = (DateTime.Now.Millisecond % 2) == 0;
 
-            oldColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Босс будет атаковать: " + (isRandomAttack ? "случайно" : "все атаки по очереди"));
-            Console.ForegroundColor = oldColor;
-
-            oldColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Нажмите enter для начала боя");
-            Console.ForegroundColor = oldColor;
+            InformPlayer("Босс будет атаковать: " + (isRandomAttack ? "случайно" : "все атаки по очереди"), ConsoleColor.Yellow);
+            InformPlayer("Нажмите enter для начала боя", ConsoleColor.Green);
             Console.ReadLine();
-
+            
             int attackNumber = 0;
             while (Health > 0)
             {
                 Console.Clear();
-                oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("У вас здоровья: " + Health);
-                Console.ForegroundColor = oldColor;
+  
+                InformPlayer("У вас здоровья: " + Health, ConsoleColor.Red);
    
                 Attack attackData = CreateAttack(isRandomAttack ? GetRandomTypeAttack() : (typeAttack) attackNumber);
                 BossAttack(attackData, ref Health, ref Armor);
@@ -122,11 +118,8 @@ namespace Delegates
                 
                 Thread.Sleep(4000);
             }
-
-            oldColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Бой закончен, вы погибли");
-            Console.ForegroundColor = oldColor;
+            
+            InformPlayer("Бой закончен, вы погибли", ConsoleColor.DarkGray);
         }
     }
 }
